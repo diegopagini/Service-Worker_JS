@@ -1,11 +1,12 @@
 /** @format */
 
-//Self hace referencia al mismo.
-//es igual a var self = this;
 self.addEventListener('fetch', (event) => {
-	if (event.request.url.includes('style.css')) {
-		//le quito el style.css a toda la app.
-		event.respondWith(null);
-	}
-	event.respondWith(fetch(event.request));
+	const resp = fetch(event.request).then((resp) => {
+		// if (resp.ok) return resp;
+		// else return fetch('img/main.jpg');
+
+		return resp.ok ? resp : fetch('img/main.jpg');
+	});
+
+	event.respondWith(resp);
 });
